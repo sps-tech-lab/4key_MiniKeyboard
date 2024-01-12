@@ -282,3 +282,8 @@ uint8_t Keyboard_write(uint8_t c){
 uint8_t Keyboard_getLEDStatus(){
     return Ep1Buffer[0];    //The only info we gets
 }
+
+uint8_t Keyboard_click( uint8_t key ){
+    Keyboard_press(key);
+    Keyboard_release(key);
+}

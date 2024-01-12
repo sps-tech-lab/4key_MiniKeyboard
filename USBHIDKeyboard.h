@@ -55,6 +55,19 @@
 #define KEY_F23       0xFA
 #define KEY_F24       0xFB
 
+//Numpad
+#define KEYPAD_0      234 
+#define KEYPAD_1      225 
+#define KEYPAD_2      226 
+#define KEYPAD_3      227 
+#define KEYPAD_4      228 
+#define KEYPAD_5      229 
+#define KEYPAD_6      230 
+#define KEYPAD_7      231 
+#define KEYPAD_8      232 
+#define KEYPAD_9      233 
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -68,6 +81,8 @@ void Keyboard_releaseAll(void);
 uint8_t Keyboard_write(uint8_t c);
 
 uint8_t Keyboard_getLEDStatus();
+
+uint8_t Keyboard_click( uint8_t key );
 
 #ifdef __cplusplus
 } // extern "C"
