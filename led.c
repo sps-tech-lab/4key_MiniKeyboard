@@ -8,21 +8,41 @@
 #include "neo.h"
 #include <Arduino.h>
 
-uint8_t rainbow_speed = LED_RAINBOW_SPEED;
 
-//Simple rainbow
-uint8_t hue_1 = 0;
-uint8_t hue_2 = 45;
-uint8_t hue_3 = 90;
-uint8_t hue_4 = 135;
+//Patterns functions
+void LED_NoLight( void );
+void LED_Rainbow( void );
+void LED_Portal( void );
+void LED_Cyberpunk( void );
 
-//Draft
+#define MAX_PATTERN_CELLS 4
+
+//Patterns struct
+struct{
+  void (*ptr[MAX_PATTERN_CELLS])(void);
+  uint8_t speed;
+  uint8_t index;
+}patterns = {
+  .ptr[0] = LED_Rainbow,
+  .ptr[1] = LED_Cyberpunk,
+  .ptr[2] = LED_Portal,
+  .ptr[3] = LED_NoLight,
+  .speed  = LED_PATTERN_SPEED,
+  .index  = 0,
+};
+
+//RGB color type
 struct rgb_s{
     uint8_t red;
     uint8_t green;
     uint8_t blue;
 };
 
+/**
+  **************************************************************************************************
+  * @brief      RGB color interpolation
+  **************************************************************************************************
+**/
 struct rgb_s interpolateColors(const struct rgb_s *color1, const struct rgb_s *color2, int t, int maxSteps) {
     struct rgb_s result;
     
@@ -33,10 +53,67 @@ struct rgb_s interpolateColors(const struct rgb_s *color1, const struct rgb_s *c
     return result;
 }
 
-void LED_Rainbow( void ){
+/**
+  **************************************************************************************************
+  * @brief      CH552 dev. board LED (unnecessary for keybord PCB)
+  **************************************************************************************************
+**/
+void LED_DebugBlink( bool state ){
+#if DEBUG_LED
+  if( state == true ){
+    digitalWrite(DBG_LED_PIN, 1);
+  }else{
+    digitalWrite(DBG_LED_PIN, 0);
+  }
+#endif
+}
 
-  if( rainbow_speed != 0 ){
-    rainbow_speed--;
+/**
+  **************************************************************************************************
+  * @brief      Set current pattern
+  **************************************************************************************************
+**/
+void LED_SetPattern( uint8_t index ){
+  //Check for valid index and pattern cell
+  if( index < MAX_PATTERN_CELLS ){ 
+    if( patterns.ptr[index] != NULL ){
+      patterns.index = index;
+    }
+  }
+}
+
+/**
+  **************************************************************************************************
+  * @brief      Main pattern periodic
+  **************************************************************************************************
+**/
+void LED_Main( void ){
+  patterns.ptr[patterns.index]();
+}
+
+/**
+  **************************************************************************************************
+  * @brief      To turn backlight off
+  **************************************************************************************************
+**/
+void LED_NoLight( void ){
+  //Dummy
+}
+
+/**
+  **************************************************************************************************
+  * @brief      Shifting HUE rainbow pattern 
+  **************************************************************************************************
+**/
+void LED_Rainbow( void ){
+  //Simple rainbow
+  static uint8_t hue_1 = 0;
+  static uint8_t hue_2 = 45;
+  static uint8_t hue_3 = 90;
+  static uint8_t hue_4 = 135;
+
+  if( patterns.speed != 0 ){
+    patterns.speed--;
     return;
   }
 
@@ -52,31 +129,24 @@ void LED_Rainbow( void ){
   NEO_writeHue(3, hue_4, NEO_BRIGHT_LOW);
   NEO_update();  
 
-  rainbow_speed = LED_RAINBOW_SPEED;
+  patterns.speed = LED_PATTERN_SPEED;
 }
 
-void LED_DebugBlink( bool state ){
-#if DEBUG_LED
-  if( state == true ){
-    digitalWrite(DBG_LED_PIN, 1);
-  }else{
-    digitalWrite(DBG_LED_PIN, 0);
-  }
-#endif
-}
-
+/**
+  **************************************************************************************************
+  * @brief      Portal.2 pulsing colors pattern
+  **************************************************************************************************
+**/
 void LED_Portal( void ){
 
-  if( rainbow_speed != 0 ){
-    rainbow_speed--;
+  if( patterns.speed != 0 ){
+    patterns.speed--;
     return;
   }
 
   //Draft
   static bool flip = false;
   static uint8_t step;
-
-  #define LED_FD_STEPS 100
 
   struct rgb_s color1_start = {35, 181, 232};
   struct rgb_s color1_endpt = {4, 20, 26};
@@ -109,21 +179,24 @@ void LED_Portal( void ){
 
   NEO_update();  
 
-  rainbow_speed = LED_RAINBOW_SPEED;
+  patterns.speed = LED_PATTERN_SPEED;
 }
 
+/**
+  **************************************************************************************************
+  * @brief      Cyberpunk.2077 pulsing colors pattern
+  **************************************************************************************************
+**/
 void LED_Cyberpunk( void ){
 
-  if( rainbow_speed != 0 ){
-    rainbow_speed--;
+  if( patterns.speed != 0 ){
+    patterns.speed--;
     return;
   }
 
   //Draft
   static bool flip = false;
   static uint8_t step;
-
-  #define LED_FD_STEPS 100
 
   struct rgb_s cyan_start = {35, 181, 232};
   struct rgb_s cyan_endpt = {4, 20, 26};
@@ -156,7 +229,9 @@ void LED_Cyberpunk( void ){
 
   NEO_update();  
 
-  rainbow_speed = LED_RAINBOW_SPEED;
+  patterns.speed = LED_PATTERN_SPEED;
 }
+
+
 
 

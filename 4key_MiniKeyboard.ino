@@ -47,9 +47,7 @@ void loop(){
   //Buttons
   BTN_Main();
   //Indication
-  //LED_Rainbow();
-  //LED_Portal();
-  LED_Cyberpunk();
+  LED_Main();
   //Time quant
   delay(1);
 }
