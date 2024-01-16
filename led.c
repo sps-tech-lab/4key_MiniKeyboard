@@ -66,11 +66,50 @@ void LED_DebugBlink( bool state ){
 }
 
 void LED_Portal( void ){
-  NEO_writeColor(0, 4, 20, 26 );
-  NEO_writeColor(1, 35, 181, 232 );
-  NEO_writeColor(2, 255, 50, 0 );
-  NEO_writeColor(3, 26, 5, 0 );
+
+  if( rainbow_speed != 0 ){
+    rainbow_speed--;
+    return;
+  }
+
+  //Draft
+  static bool flip = false;
+  static uint8_t step;
+
+  #define LED_FD_STEPS 100
+
+  struct rgb_s color1_start = {35, 181, 232};
+  struct rgb_s color1_endpt = {4, 20, 26};
+  struct rgb_s color1;
+  struct rgb_s color2_start = {26, 5, 0};
+  struct rgb_s color2_endpt = {255, 50, 0 };
+  struct rgb_s color2;
+
+  if( flip == true ){
+    if( step > 0 ){
+      step--;
+    }else{
+      flip = false;
+    }
+  }else{
+    if( step < LED_FD_STEPS ){
+      step++;
+    }else{
+      flip = true;
+    }
+  }
+  color1 = interpolateColors(&color1_start, &color1_endpt, step, LED_FD_STEPS);
+  color2 = interpolateColors(&color2_start, &color2_endpt, step, LED_FD_STEPS);
+
+  // Output the result
+  NEO_writeColor(0, color1.red, color1.green, color1.blue);
+  NEO_writeColor(1, color1.red, color1.green, color1.blue);
+  NEO_writeColor(2, color2.red, color2.green, color2.blue);
+  NEO_writeColor(3, color2.red, color2.green, color2.blue);
+
   NEO_update();  
+
+  rainbow_speed = LED_RAINBOW_SPEED;
 }
 
 void LED_Cyberpunk( void ){
@@ -115,10 +154,6 @@ void LED_Cyberpunk( void ){
   NEO_writeColor(2, pink.red, pink.green, pink.blue);
   NEO_writeColor(3, pink.red, pink.green, pink.blue);
 
-  // NEO_writeColor(0, 4, 20, 26 );
-  // NEO_writeColor(1, 35, 181, 232 );
-  // NEO_writeColor(2, 255, 0, 255 );
-  // NEO_writeColor(3, 55, 0, 55 );
   NEO_update();  
 
   rainbow_speed = LED_RAINBOW_SPEED;
