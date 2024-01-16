@@ -14,4 +14,6 @@
 
 //API
 void LED_Rainbow( void );
+void LED_Portal( void );
+void LED_Cyberpunk( void );
 void LED_DebugBlink( bool state );
