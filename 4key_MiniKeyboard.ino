@@ -40,6 +40,8 @@ void setup(){
   pinMode(NEO_LED_PIN, OUTPUT);
 
   pinMode(DBG_LED_PIN, OUTPUT);  //DEV BOARD
+
+  LED_SetPattern(1);
 }
 
 //------------------------------------------------------------------------------------

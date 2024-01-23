@@ -196,6 +196,7 @@ void LED_Cyberpunk( void ){
 
   //Draft
   static bool flip = false;
+  static uint8_t stage = 0;
   static uint8_t step;
 
   struct rgb_s cyan_start = {35, 181, 232};
@@ -204,6 +205,55 @@ void LED_Cyberpunk( void ){
   struct rgb_s pink_start = {55, 0, 55};
   struct rgb_s pink_endpt = {255, 0, 255 };
   struct rgb_s pink;
+  struct rgb_s black      = {1, 1, 1};
+
+
+  // switch(stage){
+  //   case 0: //Fade
+  //     cyan = interpolateColors(&cyan_start, &cyan_endpt, step, LED_FD_STEPS);
+  //     pink = interpolateColors(&pink_start, &pink_endpt, step, LED_FD_STEPS);
+  //     if( step++ >= LED_FD_STEPS-1 ){
+  //       stage++;
+  //       step = 0;
+  //     }
+  //   break;
+  //   case 1: //Hold
+  //     if( step++ >= LED_FD_STEPS-1 ){
+  //       stage++;
+  //       step = 0;
+  //     }
+  //   break;
+  //   case 2: //Transit
+  //     cyan = interpolateColors(&cyan_endpt, &pink_start, step, LED_TR_STEPS);
+  //     pink = interpolateColors(&pink_endpt, &cyan_start, step, LED_TR_STEPS);
+  //     if( step++ >= LED_TR_STEPS-1 ){
+  //       stage++;
+  //       step = 0;
+  //     }
+  //   break;
+  //   case 3: //Fade
+  //     cyan = interpolateColors(&pink_start, &pink_endpt, step, LED_FD_STEPS);
+  //     pink = interpolateColors(&cyan_start, &cyan_endpt, step, LED_FD_STEPS);
+  //     if( step++ >= LED_FD_STEPS-1 ){
+  //       stage++;
+  //       step = 0;
+  //     }
+  //   break;
+  //   case 4: //Hold
+  //     if( step++ >= LED_FD_STEPS-1 ){
+  //       stage++;
+  //       step = 0;
+  //     }
+  //   break;
+  //   case 5: //Transit
+  //     cyan = interpolateColors(&pink_endpt, &cyan_start, step, LED_TR_STEPS);
+  //     pink = interpolateColors(&cyan_endpt, &pink_start, step, LED_TR_STEPS);
+  //     if( step++ >= LED_TR_STEPS-1 ){
+  //       stage = 0;
+  //       step = 0;
+  //     }
+  //   break;
+  // }
 
   if( flip == true ){
     if( step > 0 ){
@@ -228,7 +278,6 @@ void LED_Cyberpunk( void ){
   NEO_writeColor(3, pink.red, pink.green, pink.blue);
 
   NEO_update();  
-
   patterns.speed = LED_PATTERN_SPEED;
 }
 

@@ -12,6 +12,7 @@
 #define DEBUG_LED         1   //[1]ON/[0]OFF
 #define LED_PATTERN_SPEED 40  //Animation speed
 #define LED_FD_STEPS      100
+#define LED_TR_STEPS      30
 
 
 //API
