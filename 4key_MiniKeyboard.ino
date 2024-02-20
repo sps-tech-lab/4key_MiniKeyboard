@@ -40,6 +40,8 @@ void setup(){
   pinMode(NEO_LED_PIN, OUTPUT);
 
   pinMode(DBG_LED_PIN, OUTPUT);  //DEV BOARD
+
+  LED_SetPattern(LDP_RAINBOW);   //Default pattern
 }
 
 //------------------------------------------------------------------------------------
@@ -47,7 +49,7 @@ void loop(){
   //Buttons
   BTN_Main();
   //Indication
-  LED_Rainbow();
+  LED_Main();
   //Time quant
   delay(1);
 }
