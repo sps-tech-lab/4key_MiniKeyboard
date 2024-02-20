@@ -19,12 +19,20 @@
 //Button struct
 struct button_s{
   bool    press;
+  bool    hold;
   bool    prev_state;
   uint8_t gpio;
   uint8_t debounce;
+  uint8_t timer;
+};
+
+enum btn_press_t{ 
+  BTN_NO_PRESS     = 0,
+  BTN_SHORT_PRESS  = 1,
+  BTN_LONG_PRESS   = 2,
 };
 
 //API
 void BTN_Main( void );
 void BTN_test( void );
-bool BTN_Processing( struct button_s *btn );
+enum btn_press_t BTN_Processing( struct button_s *btn );

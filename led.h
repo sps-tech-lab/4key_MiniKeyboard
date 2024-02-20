@@ -25,4 +25,5 @@ enum ld_patterns{
 //API
 void LED_Main( void );
 void LED_SetPattern( uint8_t index );
+void LED_NextPattern( void );
 void LED_DebugBlink( bool state );
