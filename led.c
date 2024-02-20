@@ -20,8 +20,8 @@ void LED_Cyberpunk( void );
 //Patterns struct
 struct{
   void (*ptr[MAX_PATTERN_CELLS])(void);
-  uint8_t speed;
-  uint8_t index;
+  uint16_t speed;
+  uint8_t  index;
 }patterns = {
   .ptr[0] = LED_Rainbow,
   .ptr[1] = LED_Cyberpunk,
@@ -138,34 +138,37 @@ void LED_Rainbow( void ){
   **************************************************************************************************
 **/
 void LED_Portal( void ){
+  //Draft
+  static bool flip = false;
+  static uint8_t step;
+
+  static struct rgb_s color1_start = {35, 181, 232};
+  static struct rgb_s color1_endpt = {4, 20, 26};
+  static struct rgb_s color1;
+  static struct rgb_s color2_start = {26, 5, 0};
+  static struct rgb_s color2_endpt = {255, 50, 0 };
+  static struct rgb_s color2;
 
   if( patterns.speed != 0 ){
     patterns.speed--;
     return;
   }
 
-  //Draft
-  static bool flip = false;
-  static uint8_t step;
-
-  struct rgb_s color1_start = {35, 181, 232};
-  struct rgb_s color1_endpt = {4, 20, 26};
-  struct rgb_s color1;
-  struct rgb_s color2_start = {26, 5, 0};
-  struct rgb_s color2_endpt = {255, 50, 0 };
-  struct rgb_s color2;
-
   if( flip == true ){
     if( step > 0 ){
       step--;
     }else{
       flip = false;
+      patterns.speed = LED_PATTERN_SPEED*100+random(2000);
+      return;
     }
   }else{
     if( step < LED_FD_STEPS ){
       step++;
     }else{
       flip = true;
+      patterns.speed = LED_PATTERN_SPEED*100+random(2000);
+      return;
     }
   }
   color1 = interpolateColors(&color1_start, &color1_endpt, step, LED_FD_STEPS);
@@ -179,7 +182,7 @@ void LED_Portal( void ){
 
   NEO_update();  
 
-  patterns.speed = LED_PATTERN_SPEED;
+  patterns.speed = 10;
 }
 
 /**
@@ -188,72 +191,21 @@ void LED_Portal( void ){
   **************************************************************************************************
 **/
 void LED_Cyberpunk( void ){
+  //Draft
+  static bool flip = false;
+  static uint8_t step;
+
+  static struct rgb_s cyan_start = {35, 181, 232};
+  static struct rgb_s cyan_endpt = {4, 20, 26};
+  static struct rgb_s cyan;
+  static struct rgb_s pink_start = {55, 0, 55};
+  static struct rgb_s pink_endpt = {255, 0, 255 };
+  static struct rgb_s pink;
 
   if( patterns.speed != 0 ){
     patterns.speed--;
     return;
   }
-
-  //Draft
-  static bool flip = false;
-  static uint8_t stage = 0;
-  static uint8_t step;
-
-  struct rgb_s cyan_start = {35, 181, 232};
-  struct rgb_s cyan_endpt = {4, 20, 26};
-  struct rgb_s cyan;
-  struct rgb_s pink_start = {55, 0, 55};
-  struct rgb_s pink_endpt = {255, 0, 255 };
-  struct rgb_s pink;
-  struct rgb_s black      = {1, 1, 1};
-
-
-  // switch(stage){
-  //   case 0: //Fade
-  //     cyan = interpolateColors(&cyan_start, &cyan_endpt, step, LED_FD_STEPS);
-  //     pink = interpolateColors(&pink_start, &pink_endpt, step, LED_FD_STEPS);
-  //     if( step++ >= LED_FD_STEPS-1 ){
-  //       stage++;
-  //       step = 0;
-  //     }
-  //   break;
-  //   case 1: //Hold
-  //     if( step++ >= LED_FD_STEPS-1 ){
-  //       stage++;
-  //       step = 0;
-  //     }
-  //   break;
-  //   case 2: //Transit
-  //     cyan = interpolateColors(&cyan_endpt, &pink_start, step, LED_TR_STEPS);
-  //     pink = interpolateColors(&pink_endpt, &cyan_start, step, LED_TR_STEPS);
-  //     if( step++ >= LED_TR_STEPS-1 ){
-  //       stage++;
-  //       step = 0;
-  //     }
-  //   break;
-  //   case 3: //Fade
-  //     cyan = interpolateColors(&pink_start, &pink_endpt, step, LED_FD_STEPS);
-  //     pink = interpolateColors(&cyan_start, &cyan_endpt, step, LED_FD_STEPS);
-  //     if( step++ >= LED_FD_STEPS-1 ){
-  //       stage++;
-  //       step = 0;
-  //     }
-  //   break;
-  //   case 4: //Hold
-  //     if( step++ >= LED_FD_STEPS-1 ){
-  //       stage++;
-  //       step = 0;
-  //     }
-  //   break;
-  //   case 5: //Transit
-  //     cyan = interpolateColors(&pink_endpt, &cyan_start, step, LED_TR_STEPS);
-  //     pink = interpolateColors(&cyan_endpt, &pink_start, step, LED_TR_STEPS);
-  //     if( step++ >= LED_TR_STEPS-1 ){
-  //       stage = 0;
-  //       step = 0;
-  //     }
-  //   break;
-  // }
 
   if( flip == true ){
     if( step > 0 ){

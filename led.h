@@ -14,6 +14,13 @@
 #define LED_FD_STEPS      100
 #define LED_TR_STEPS      30
 
+enum ld_patterns{ 
+  LDP_RAINBOW   = 0,
+  LDP_CYBERPUNK = 1,
+  LDP_PORTAL    = 2,
+  LDP_NOLIGHT   = 3,
+};
+
 
 //API
 void LED_Main( void );
