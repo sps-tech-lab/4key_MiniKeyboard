@@ -41,7 +41,7 @@ void setup(){
 
   pinMode(DBG_LED_PIN, OUTPUT);  //DEV BOARD
 
-  LED_SetPattern(LDP_PORTAL);
+  LED_SetPattern(LDP_RAINBOW);   //Default pattern
 }
 
 //------------------------------------------------------------------------------------
