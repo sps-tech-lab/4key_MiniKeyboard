@@ -84,6 +84,18 @@ void LED_SetPattern( uint8_t index ){
 
 /**
   **************************************************************************************************
+  * @brief      Set next pattern
+  **************************************************************************************************
+**/
+void LED_NextPattern( void ){
+  //Check for valid index and pattern cell
+  if( ++patterns.index >= MAX_PATTERN_CELLS ){ 
+    patterns.index = 0;
+  }
+}
+
+/**
+  **************************************************************************************************
   * @brief      Main pattern periodic
   **************************************************************************************************
 **/
@@ -97,7 +109,12 @@ void LED_Main( void ){
   **************************************************************************************************
 **/
 void LED_NoLight( void ){
-  //Dummy
+  // Output the result
+  NEO_writeColor(0, 0, 0, 0);
+  NEO_writeColor(1, 0, 0, 0);
+  NEO_writeColor(2, 0, 0, 0);
+  NEO_writeColor(3, 0, 0, 0);
+  NEO_update();  
 }
 
 /**
@@ -224,6 +241,8 @@ void LED_Cyberpunk( void ){
   pink = interpolateColors(&pink_start, &pink_endpt, step, LED_FD_STEPS);
 
   // Output the result
+  NEO_clearAll();
+
   NEO_writeColor(0, cyan.red, cyan.green, cyan.blue);
   NEO_writeColor(1, cyan.red, cyan.green, cyan.blue);
   NEO_writeColor(2, pink.red, pink.green, pink.blue);

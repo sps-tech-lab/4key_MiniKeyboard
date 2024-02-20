@@ -7,6 +7,7 @@
 #include "USBHIDKeyboard.h"
 #include "buttons.h"
 #include "led.h"
+#include "neo.h"
 #include <Arduino.h>
 
 
@@ -30,9 +31,10 @@ enum btn_press_t BTN_Processing( struct button_s *btn ){
     if( btn->press ){
       LED_DebugBlink(false);
       btn->hold  = true;
-      btn->timer = 300;
+      btn->timer = 3000;
       return BTN_SHORT_PRESS;
     } else {
+      btn->hold = false;
       LED_DebugBlink(true);
     }
     btn->debounce = BTN_DEBOUNCE_TIMEOUT;
@@ -49,7 +51,12 @@ enum btn_press_t BTN_Processing( struct button_s *btn ){
 }
 
 void BTN_Main( void ){
-  if( BTN_Processing( &btn4 ) == BTN_SHORT_PRESS ){
+  enum btn_press_t res_bt1 = BTN_Processing( &btn1 );
+  enum btn_press_t res_bt2 = BTN_Processing( &btn2 );
+  enum btn_press_t res_bt3 = BTN_Processing( &btn3 );
+  enum btn_press_t res_bt4 = BTN_Processing( &btn4 );
+  
+  if( res_bt4 == BTN_SHORT_PRESS ){
     //Sequence 'ä'
     Keyboard_press(KEY_LEFT_ALT);
     Keyboard_click(KEYPAD_0);
@@ -59,8 +66,10 @@ void BTN_Main( void ){
     Keyboard_release(KEY_LEFT_ALT);
     delay(100);
     Keyboard_releaseAll();
+  }else if( res_bt4 == BTN_LONG_PRESS ){
+    LED_NextPattern();
   }
-  if( BTN_Processing( &btn3 ) == BTN_SHORT_PRESS ){
+  if( res_bt3 == BTN_SHORT_PRESS ){
     //Sequence 'ö'
     Keyboard_press(KEY_LEFT_ALT);
     Keyboard_click(KEYPAD_0);
@@ -71,7 +80,7 @@ void BTN_Main( void ){
     delay(100);
     Keyboard_releaseAll();
   }
-  if( BTN_Processing( &btn2 ) == BTN_SHORT_PRESS ){
+  if( res_bt2 == BTN_SHORT_PRESS ){
     //Sequence 'ü'
     Keyboard_press(KEY_LEFT_ALT);
     Keyboard_click(KEYPAD_0);
@@ -82,7 +91,7 @@ void BTN_Main( void ){
     delay(100);
     Keyboard_releaseAll();
   }
-  if( BTN_Processing( &btn1 ) == BTN_SHORT_PRESS ){
+  if( res_bt1 == BTN_SHORT_PRESS ){
     //Sequence 'ß'
     Keyboard_press(KEY_LEFT_ALT);
     Keyboard_click(KEYPAD_0);
@@ -92,5 +101,21 @@ void BTN_Main( void ){
     Keyboard_release(KEY_LEFT_ALT);
     delay(100);
     Keyboard_releaseAll();
+  }else if( res_bt1 == BTN_LONG_PRESS ){
+
+    NEO_writeColor(0, 0, 0, 255);
+    NEO_writeColor(1, 0, 0, 255);
+    NEO_writeColor(2, 0, 0, 255);
+    NEO_writeColor(3, 0, 0, 255);
+
+    NEO_update(); 
+    
+// jump to bootloader
+////////////////////////////////////////////
+    USB_CTRL = 0;
+    EA = 0;
+    TMOD = 0;
+    __asm lcall #BOOT_LOAD_ADDR __endasm;
+////////////////////////////////////////////
   }
 }
