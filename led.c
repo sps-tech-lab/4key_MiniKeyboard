@@ -115,6 +115,11 @@ void LED_NoLight( void ){
   NEO_writeColor(1, 0, 0, 0);
   NEO_writeColor(2, 0, 0, 0);
   NEO_writeColor(3, 0, 0, 0);
+
+  NEO_writeColor(4, 0, 0, 0);
+  NEO_writeColor(5, 0, 0, 0);
+  NEO_writeColor(6, 0, 0, 0);
+  NEO_writeColor(7, 0, 0, 0);
   NEO_update();  
 }
 
@@ -126,9 +131,13 @@ void LED_NoLight( void ){
 void LED_Rainbow( void ){
   //Simple rainbow
   static uint8_t hue_1 = 0;
-  static uint8_t hue_2 = 45;
-  static uint8_t hue_3 = 90;
-  static uint8_t hue_4 = 135;
+  static uint8_t hue_2 = 19;
+  static uint8_t hue_3 = 38;
+  static uint8_t hue_4 = 57;
+  static uint8_t hue_5 = 76;
+  static uint8_t hue_6 = 95;
+  static uint8_t hue_7 = 114;
+  static uint8_t hue_8 = 135;
 
   if( patterns.speed != 0 ){
     patterns.speed--;
@@ -140,11 +149,19 @@ void LED_Rainbow( void ){
   if( ++hue_2 > 191 ) hue_2 = 0;
   if( ++hue_3 > 191 ) hue_3 = 0;
   if( ++hue_4 > 191 ) hue_4 = 0;
+  if( ++hue_5 > 191 ) hue_5 = 0;
+  if( ++hue_6 > 191 ) hue_6 = 0;
+  if( ++hue_7 > 191 ) hue_7 = 0;
+  if( ++hue_8 > 191 ) hue_8 = 0;
 
   NEO_writeHue(0, hue_1, NEO_BRIGHT_LOW);
   NEO_writeHue(1, hue_2, NEO_BRIGHT_LOW);
   NEO_writeHue(2, hue_3,  NEO_BRIGHT_LOW); 
   NEO_writeHue(3, hue_4, NEO_BRIGHT_LOW);
+  NEO_writeHue(4, hue_5, NEO_BRIGHT_LOW);
+  NEO_writeHue(5, hue_6, NEO_BRIGHT_LOW);
+  NEO_writeHue(6, hue_7,  NEO_BRIGHT_LOW); 
+  NEO_writeHue(7, hue_8, NEO_BRIGHT_LOW);
   NEO_update();  
 
   patterns.speed = LED_PATTERN_SPEED;
@@ -195,8 +212,13 @@ void LED_Portal( void ){
   // Output the result
   NEO_writeColor(0, color1.red, color1.green, color1.blue);
   NEO_writeColor(1, color1.red, color1.green, color1.blue);
-  NEO_writeColor(2, color2.red, color2.green, color2.blue);
-  NEO_writeColor(3, color2.red, color2.green, color2.blue);
+  NEO_writeColor(2, color1.red, color1.green, color1.blue);
+  NEO_writeColor(3, color1.red, color1.green, color1.blue);
+  
+  NEO_writeColor(4, color2.red, color2.green, color2.blue);
+  NEO_writeColor(5, color2.red, color2.green, color2.blue);
+  NEO_writeColor(6, color2.red, color2.green, color2.blue);
+  NEO_writeColor(7, color2.red, color2.green, color2.blue);
 
   NEO_update();  
 
@@ -244,8 +266,13 @@ void LED_Cyberpunk( void ){
   // Output the result
   NEO_writeColor(0, cyan.red, cyan.green, cyan.blue);
   NEO_writeColor(1, cyan.red, cyan.green, cyan.blue);
-  NEO_writeColor(2, pink.red, pink.green, pink.blue);
-  NEO_writeColor(3, pink.red, pink.green, pink.blue);
+  NEO_writeColor(2, cyan.red, cyan.green, cyan.blue);
+  NEO_writeColor(3, cyan.red, cyan.green, cyan.blue);
+
+  NEO_writeColor(4, pink.red, pink.green, pink.blue);
+  NEO_writeColor(5, pink.red, pink.green, pink.blue);
+  NEO_writeColor(6, pink.red, pink.green, pink.blue);
+  NEO_writeColor(7, pink.red, pink.green, pink.blue);
 
   NEO_update();  
   patterns.speed = LED_PATTERN_SPEED;

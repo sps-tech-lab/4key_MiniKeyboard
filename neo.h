@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 //Config
-#define NEO_COUNT 4	//Count
+#define NEO_COUNT 8	//Count
 #define NEO_GRB		//Type
 
 //Key colors (hue value: 0..191)
