@@ -1,0 +1,30 @@
+-muwx
+-i C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924/4key_MiniKeyboard.ino.elf
+-M
+-X 0x036c
+-C 0x3800
+-b HOME = 0x0000
+-b XSEG = 0x0094
+-b PSEG = 0x0094
+-b ISEG = 0x0000
+-b BSEG = 0x0000
+-k C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924
+-k C:\Users\user\AppData\Local\Arduino15\packages\CH55xDuino\tools\sdcc\build.13407_4/lib/large_int_calc_stack_auto
+-l C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924/optionalLink.lib
+-l C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924/..\..\cores\d95e393c3e16157ba1c05c1d150d0c31\core.lib
+-l mcs51
+-l libsdcc
+-l liblong
+-l liblonglong
+-l libint
+-l libfloat
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\4key_MiniKeyboard.ino.cpp.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\USBHIDKeyboard.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\USBconstant.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\USBhandler.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\buttons.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\led.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\sketch\neo.c.rel
+C:\Users\user\AppData\Local\Temp\arduino\sketches\6853218B4A386EB3681518A76A6C9924\libraries\WS2812\WS2812.c.rel
+
+-e
