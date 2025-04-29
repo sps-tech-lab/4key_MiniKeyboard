@@ -10,6 +10,24 @@ Project of custom firmware for a 4-key macro keyboard from Aliexpress, utilizing
 
 For now I havn't written any external key sequence configurator, so you just need to hardcode your own sequences and build own *.hex
 
+### Backlight
+
+Added three backlight light patterns
+
+* **Rainbbow style** - slow rainbow colors shif
+* **Cyberpunk style** - magenta vs cyan colors slow change
+* **Portal style** - orange vs cyan colors puls change
+
+![config](https://github.com/GBenG/4key_MiniKeyboard/raw/main/img/rd_patterns.png)
+
+To change the pattern, press and hold `BUTTON 1` until the pattern changes.
+
+### Bootloader
+
+To enter bootloader mode, press and hold `BUTTON 4` until the backlight changes to blue.
+
+---
+
 ## Build
 
 Project simply use Arduino IDE
