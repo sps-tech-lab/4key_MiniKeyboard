@@ -29,22 +29,23 @@ enum btn_press_t BTN_Processing( struct button_s *btn ){
   if( btn->prev_state != btn->press ){
     btn->prev_state = btn->press;
     if( btn->press ){
-      LED_DebugBlink(false);
       btn->hold  = true;
-      btn->timer = 3000;
-      return BTN_SHORT_PRESS;
+      btn->timer = 1000;
     } else {
-      btn->hold = false;
-      LED_DebugBlink(true);
+      if( btn->hold == true ){
+        btn->hold = false;
+        return BTN_SHORT_PRESS;
+      }
     }
     btn->debounce = BTN_DEBOUNCE_TIMEOUT;
   }else{
     if( btn->hold == true && btn->timer != 0 ){
       btn->timer--;
-      if( btn->timer == 0){
+      if( btn->timer == 0 ){
         btn->hold = false;
         return BTN_LONG_PRESS;
       }
+      delay(1);
     }
   }
   return BTN_NO_PRESS;
